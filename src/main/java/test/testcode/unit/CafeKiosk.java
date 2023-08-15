@@ -5,13 +5,20 @@ import test.testcode.unit.Beverage.Beverage;
 import test.testcode.unit.Order.Order;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 @Getter
 public class CafeKiosk {
+    private static final LocalTime SHOP_OPEN_TIME = LocalTime.of(10,0);
+    private static final LocalTime SHOP_CLOSE_TIME = LocalTime.of(22,0);
+
     private final List<Beverage> beverages = new ArrayList<>();
-    public void add(Beverage beverage) {
-        beverages.add(beverage);
+    public void add(Beverage beverage, int count)  {
+        if (count <= 0) throw new IllegalArgumentException("음료는 1잔 이상 구매할 수 있습니다.");
+        for (int i = 0; i< count; i++) {
+            beverages.add(beverage);
+        }
     }
 
     public void remove(Beverage beverage){
@@ -29,7 +36,24 @@ public class CafeKiosk {
         return totalPrice;
     }
 
-    public Order createOrder(){
-        return new Order(LocalDateTime.now(),beverages);
+    /*
+     * 해당 코드는, LocalDateTime 런타임 시점에 따라 테스트의 성공유무가 결정되므로, 이를 인자로 받는 함수가 낫다.
+     */
+//    public Order createOrder(){
+//
+//        LocalDateTime currentDateTime = LocalDateTime.now();
+//        LocalTime currentTime = currentDateTime.toLocalTime();
+//        if (currentTime.isBefore(SHOP_OPEN_TIME) || currentTime.isAfter(SHOP_CLOSE_TIME)){
+//            throw new IllegalArgumentException("주문 시간이 아닙니다. 관리자에게 문의하세요");
+//        }
+//        return new Order(currentDateTime,beverages);
+//    }
+
+    public Order createOrder(LocalDateTime currentDateTime){
+        LocalTime currentTime = currentDateTime.toLocalTime();
+        if (currentTime.isBefore(SHOP_OPEN_TIME) || currentTime.isAfter(SHOP_CLOSE_TIME)){
+            throw new IllegalArgumentException("주문 시간이 아닙니다. 관리자에게 문의하세요");
+        }
+        return new Order(currentDateTime,beverages);
     }
 }

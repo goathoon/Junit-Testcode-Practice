@@ -66,6 +66,19 @@ class CafeKioskTest {
         cafeKiosk.clear();
         assertThat(cafeKiosk.getBeverages()).isEmpty();
     }
+
+    @Test
+    void calculateTotalPrice(){
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        Latte latte = new Latte();
+
+        cafeKiosk.add(americano,1);
+        cafeKiosk.add(latte,1);
+
+        int totalPrice = cafeKiosk.calculateTotalPrice();
+        assertThat(totalPrice).isEqualTo(8500);
+    }
 //    @Test
 //    void createOrder(){
 //        //cafe kiosk 인스턴스 생성후 해당 인스턴스 변수인 beverages에 저장되어있음.

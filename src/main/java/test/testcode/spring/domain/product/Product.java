@@ -2,6 +2,7 @@ package test.testcode.spring.domain.product;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import test.testcode.spring.domain.BaseEntity;
@@ -26,4 +27,14 @@ public class Product extends BaseEntity {
     private String name;
 
     private int price;
+
+    @Builder
+    private Product(String productNumber, ProductType type, ProductSellingStatus sellingStatus, String name, int price) {
+        // id 는 자동생성되므로 생략
+        this.productNumber = productNumber;
+        this.type = type;
+        this.sellingStatus = sellingStatus;
+        this.name = name;
+        this.price = price;
+    }
 }

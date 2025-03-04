@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import test.testcode.spring.api.controller.order.request.OrderCreateRequest;
 import test.testcode.spring.api.service.order.OrderService;
+import test.testcode.spring.api.service.order.response.OrderResponse;
+import test.testcode.spring.domain.order.OrderRepository;
 
 import java.time.LocalDateTime;
 
@@ -15,8 +17,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/api/v1/orders/new")
-    public void createOrder(@RequestBody OrderCreateRequest request) {
+    public OrderResponse createOrder(@RequestBody OrderCreateRequest request) {
         LocalDateTime registeredDateTime = LocalDateTime.now();
-        orderService.createOrder(request, registeredDateTime);
+        return orderService.createOrder(request, registeredDateTime);
     }
 }

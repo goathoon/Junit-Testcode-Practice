@@ -1,14 +1,15 @@
 package test.testcode.spring.api.service.order;
 
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import test.testcode.spring.api.controller.order.request.OrderCreateRequest;
 import test.testcode.spring.api.service.order.response.OrderResponse;
+import test.testcode.spring.domain.order.OrderRepository;
+import test.testcode.spring.domain.orderproduct.OrderProductRepository;
 import test.testcode.spring.domain.product.Product;
 import test.testcode.spring.domain.product.ProductRepository;
 import test.testcode.spring.domain.product.ProductType;
@@ -16,8 +17,9 @@ import test.testcode.spring.domain.product.ProductType;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
-import static test.testcode.spring.domain.product.ProductSellingStatus.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+import static test.testcode.spring.domain.product.ProductSellingStatus.SELLING;
 import static test.testcode.spring.domain.product.ProductType.HANDMADE;
 
 @ActiveProfiles("test")
@@ -29,7 +31,20 @@ class OrderServiceTest {
     private ProductRepository productRepository;
 
     @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderProductRepository orderProductRepository;
+
+    @Autowired
     private OrderService orderService;
+
+    @AfterEach
+    void tearDown() {
+        orderProductRepository.deleteAllInBatch();
+        productRepository.deleteAllInBatch();
+        orderRepository.deleteAllInBatch();
+    }
 
     @Test
     @DisplayName("주문번호 리스트를 받아 주문을 생성한다")

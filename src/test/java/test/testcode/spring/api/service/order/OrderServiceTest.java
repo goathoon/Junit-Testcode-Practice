@@ -14,6 +14,7 @@ import test.testcode.spring.domain.product.Product;
 import test.testcode.spring.domain.product.ProductRepository;
 import test.testcode.spring.domain.product.ProductType;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import static test.testcode.spring.domain.product.ProductType.HANDMADE;
 
 @ActiveProfiles("test")
 @SpringBootTest
+@Transactional
 //@DataJpaTest
 class OrderServiceTest {
 

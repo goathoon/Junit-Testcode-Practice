@@ -3,6 +3,7 @@ package test.testcode.spring.api.service.product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import test.testcode.spring.api.controller.product.dto.request.ProductCreateRequest;
+import test.testcode.spring.api.service.product.request.ProductCreateServiceRequest;
 import test.testcode.spring.api.service.product.response.ProductResponse;
 import test.testcode.spring.domain.product.Product;
 import test.testcode.spring.domain.product.ProductRepository;
@@ -20,7 +21,7 @@ import static test.testcode.spring.domain.product.ProductType.HANDMADE;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public ProductResponse createProduct(ProductCreateRequest request) {
+    public ProductResponse createProduct(ProductCreateServiceRequest request) {
         String nextProductNumber = createNextProductNumber();
 
         Product savedProduct = request.toEntity(nextProductNumber);

@@ -60,7 +60,9 @@ class OrderRepositoryTest {
         order3.updateStatusToPaymentCompleted();
 
         orderRepository.saveAll(List.of(order1,order2,order3,order4));
-        orderRepository.flush(); // 여기 유의!!!!
+        System.out.println("===== save =====");
+//        orderRepository.flush(); // 여기 유의!!!!
+        System.out.println("===== after flush =====");
 
         // when
         List<Order> result = orderRepository.findOrdersBy(registerTime, registerTime.plusDays(1L), OrderStatus.PAYMENT_COMPLETED);

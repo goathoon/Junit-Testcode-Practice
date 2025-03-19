@@ -26,6 +26,7 @@ public class Order extends BaseEntity {
     private OrderStatus orderStatus;
 
     private int totalPrice;
+
     private LocalDateTime registeredDateTime;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
@@ -48,5 +49,9 @@ public class Order extends BaseEntity {
 
     public static Order create(List<Product> products, LocalDateTime registeredDateTime) {
         return new Order(products, registeredDateTime);
+    }
+
+    public void updateStatusToPaymentCompleted() {
+        this.orderStatus = OrderStatus.PAYMENT_COMPLETED;
     }
 }
